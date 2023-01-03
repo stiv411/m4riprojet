@@ -1,6 +1,6 @@
 /*******************************************************************
  *
- *                 M4RI: Linear Algebra over GF(2)
+ *                 M4RI: Linear Algebra over GF(2) * Update 10
  *
  *    Copyright (C) 2008 Martin Albrecht <M.R.Albrecht@rhul.ac.uk>
  *    Copyright (C) 2008 Clement Pernet <pernet@math.washington.edu>
@@ -27,12 +27,9 @@
 #include "graycode.h"
 #include "parity.h"
 #include "strassen.h"
+
 #ifndef MIN
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
-#endif
-
-#if __M4RI_HAVE_OPENMP
-#include <omp.h>
 #endif
 
 // Returns true if a is closer to cutoff than a/2.
@@ -105,106 +102,170 @@ mzd_t *_mzd_mul_even(mzd_t *C, mzd_t const *A, mzd_t const *B, int cutoff) {
      */
 
     /* change this to mzd_init(mmm, MAX(nnn,kkk)) to fix the todo below */
-    mzd_t *Wmk = mzd_init(mmm, kkk);
+#pragma omp parallel
+#pragma omp single
+    {
+#pragma omp task
+        {mzd_t *Wmk = mzd_init(mmm, kkk);
     mzd_t *Wkn = mzd_init(kkk, nnn);
 
     _mzd_add(Wkn, B22, B12);              /* Wkn = B22 + B12 */
     _mzd_add(Wmk, A22, A12);              /* Wmk = A22 + A12 */
     _mzd_mul_even(C21, Wmk, Wkn, cutoff); /* C21 = Wmk * Wkn */
 
+    mzd_free(Wmk);
+    mzd_free(Wkn);
+  }
+
+#pragma omp task
+  {
+    mzd_t *Wmk = mzd_init(mmm, kkk);
+    mzd_t *Wkn = mzd_init(kkk, nnn);
+
     _mzd_add(Wmk, A22, A21);              /* Wmk = A22 - A21 */
     _mzd_add(Wkn, B22, B21);              /* Wkn = B22 - B21 */
     _mzd_mul_even(C22, Wmk, Wkn, cutoff); /* C22 = Wmk * Wkn */
 
-    _mzd_add(Wkn, Wkn, B12);              /* Wkn = Wkn + B12 */
-    _mzd_add(Wmk, Wmk, A12);              /* Wmk = Wmk + A12 */
+    mzd_free(Wmk);
+    mzd_free(Wkn);
+  }
+
+#pragma omp task
+  {
+    mzd_t *Wmk = mzd_init(mmm, kkk);
+    mzd_t *Wkn = mzd_init(kkk, nnn);
+    _mzd_add(Wkn, B22, B21); /* Wkn = B22 - B21 */
+    _mzd_add(Wkn, Wkn, B12); /* Wkn = Wkn + B12 */
+
+    _mzd_add(Wmk, A22, A21); /* Wmk = A22 - A21 */
+    _mzd_add(Wmk, Wmk, A12); /* Wmk = Wmk + A12 */
+
     _mzd_mul_even(C11, Wmk, Wkn, cutoff); /* C11 = Wmk * Wkn */
 
-    _mzd_add(Wmk, Wmk, A11);              /* Wmk = Wmk - A11 */
-    _mzd_mul_even(C12, Wmk, B12, cutoff); /* C12 = Wmk * B12 */
-    _mzd_add(C12, C12, C22);              /* C12 = C12 + C22 */
-
-    /**
-     * \todo ideally we would use the same Wmk throughout the function
-     * but some called function doesn't like that and we end up with a
-     * wrong result if we use virtual Wmk matrices. Ideally, this should
-     * be fixed not worked around. The check whether the bug has been
-     * fixed, use only one Wmk and check if mzd_mul(4096, 3528,
-     * 4096, 2124) still returns the correct answer.
-     */
-
     mzd_free(Wmk);
-    Wmk = mzd_mul(NULL, A12, B21, cutoff); /*Wmk = A12 * B21 */
-
-    _mzd_add(C11, C11, Wmk);              /* C11 = C11 + Wmk */
-    _mzd_add(C12, C11, C12);              /* C12 = C11 - C12 */
-    _mzd_add(C11, C21, C11);              /* C11 = C21 - C11 */
-    _mzd_add(Wkn, Wkn, B11);              /* Wkn = Wkn - B11 */
-    _mzd_mul_even(C21, A21, Wkn, cutoff); /* C21 = A21 * Wkn */
     mzd_free(Wkn);
+  }
 
-    _mzd_add(C21, C11, C21);              /* C21 = C11 - C21 */
-    _mzd_add(C22, C22, C11);              /* C22 = C22 + C11 */
-    _mzd_mul_even(C11, A11, B11, cutoff); /* C11 = A11 * B11 */
+#pragma omp task
+  {
+    mzd_t *Wmk = mzd_init(mmm, kkk);
 
-    _mzd_add(C11, C11, Wmk); /* C11 = C11 + Wmk */
+    _mzd_add(Wmk, A22, A21); /* Wmk = A22 - A21 */
+    _mzd_add(Wmk, Wmk, A12); /* Wmk = Wmk + A12 */
+    _mzd_add(Wmk, Wmk, A11); /* Wmk = Wmk - A11 */
 
-    /* clean up */
-    mzd_free_window((mzd_t *)A11);
-    mzd_free_window((mzd_t *)A12);
-    mzd_free_window((mzd_t *)A21);
-    mzd_free_window((mzd_t *)A22);
-
-    mzd_free_window((mzd_t *)B11);
-    mzd_free_window((mzd_t *)B12);
-    mzd_free_window((mzd_t *)B21);
-    mzd_free_window((mzd_t *)B22);
-
-    mzd_free_window(C11);
-    mzd_free_window(C12);
-    mzd_free_window(C21);
-    mzd_free_window(C22);
+    _mzd_mul_even(C12, Wmk, B12, cutoff); /* C12 = Wmk * B12 */
 
     mzd_free(Wmk);
   }
-  /* deal with rest */
-  nnn *= 2;
-  if (n > nnn) {
-    /*         |AA|   | B|   | C|
-     * Compute |AA| x | B| = | C| */
-    mzd_t const *B_last_col = mzd_init_window_const(B, 0, nnn, k, n);
-    mzd_t *C_last_col       = mzd_init_window(C, 0, nnn, m, n);
-    _mzd_mul_m4rm(C_last_col, A, B_last_col, 0, TRUE);
-    mzd_free_window((mzd_t *)B_last_col);
-    mzd_free_window(C_last_col);
-  }
-  mmm *= 2;
-  if (m > mmm) {
-    /*         |  |   |B |   |  |
-     * Compute |AA| x |B | = |C | */
-    mzd_t const *A_last_row  = mzd_init_window_const(A, mmm, 0, m, k);
-    mzd_t const *B_first_col = mzd_init_window_const(B, 0, 0, k, nnn);
-    mzd_t *C_last_row        = mzd_init_window(C, mmm, 0, m, nnn);
-    _mzd_mul_m4rm(C_last_row, A_last_row, B_first_col, 0, TRUE);
-    mzd_free_window((mzd_t *)A_last_row);
-    mzd_free_window((mzd_t *)B_first_col);
-    mzd_free_window(C_last_row);
-  }
-  kkk *= 2;
-  if (k > kkk) {
-    /* Add to  |  |   | B|   |C |
-     * result  |A | x |  | = |  | */
-    mzd_t const *A_last_col = mzd_init_window_const(A, 0, kkk, mmm, k);
-    mzd_t const *B_last_row = mzd_init_window_const(B, kkk, 0, k, nnn);
-    mzd_t *C_bulk           = mzd_init_window(C, 0, 0, mmm, nnn);
-    mzd_addmul_m4rm(C_bulk, A_last_col, B_last_row, 0);
-    mzd_free_window((mzd_t *)A_last_col);
-    mzd_free_window((mzd_t *)B_last_row);
-    mzd_free_window(C_bulk);
-  }
+#pragma omp taskwait
+}
 
-  __M4RI_DD_MZD(C);
-  return C;
+/**
+ * \todo ideally we would use the same Wmk throughout the function
+ * but some called function doesn't like that and we end up with a
+ * wrong result if we use virtual Wmk matrices. Ideally, this should
+ * be fixed not worked around. The check whether the bug has been
+ * fixed, use only one Wmk and check if mzd_mul(4096, 3528,
+ * 4096, 2124) still returns the correct answer.
+ */
+_mzd_add(C12, C12, C22); /* C12 = C12 + C22 */
+
+mzd_t *Wmk = mzd_init(mmm, kkk);
+mzd_t *Wkn = mzd_init(kkk, nnn);
+
+Wmk = mzd_mul(NULL, A12, B21, cutoff); /* Wmk = A12 * B21 */
+
+#pragma omp parallel
+#pragma omp single
+{
+#pragma omp task
+    {_mzd_add(Wkn, B22, B21); /* Wkn = B22 - B21 */
+_mzd_add(Wkn, Wkn, B12);      /* Wkn = Wkn + B12 */
+_mzd_add(Wkn, Wkn, B11);      /* Wkn = Wkn - B11 */
+}
+
+#pragma omp task
+{
+  _mzd_add(C11, C11, Wmk); /* C11 = C11 + Wmk */
+  _mzd_add(C12, C11, C12); /* C12 = C11 - C12 */
+  _mzd_add(C11, C21, C11); /* C11 = C21 - C11 */
+}
+
+#pragma omp taskwait
+
+#pragma omp task
+{
+  _mzd_mul_even(C21, A21, Wkn, cutoff); /* C21 = A21 * Wkn */
+  mzd_free(Wkn);
+  _mzd_add(C21, C11, C21); /* C21 = C11 - C21 */
+}
+
+#pragma omp task
+{ _mzd_add(C22, C22, C11); /* C22 = C22 + C11 */ }
+
+#pragma omp taskwait
+}
+
+_mzd_mul_even(C11, A11, B11, cutoff); /* C11 = A11 * B11 */
+_mzd_add(C11, C11, Wmk);              /* C11 = C11 + Wmk */
+
+/* clean up */
+mzd_free_window((mzd_t *)A11);
+mzd_free_window((mzd_t *)A12);
+mzd_free_window((mzd_t *)A21);
+mzd_free_window((mzd_t *)A22);
+
+mzd_free_window((mzd_t *)B11);
+mzd_free_window((mzd_t *)B12);
+mzd_free_window((mzd_t *)B21);
+mzd_free_window((mzd_t *)B22);
+
+mzd_free_window(C11);
+mzd_free_window(C12);
+mzd_free_window(C21);
+mzd_free_window(C22);
+
+mzd_free(Wmk);
+}
+/* deal with rest */
+nnn *= 2;
+if (n > nnn) {
+  /*         |AA|   | B|   | C|
+   * Compute |AA| x | B| = | C| */
+  mzd_t const *B_last_col = mzd_init_window_const(B, 0, nnn, k, n);
+  mzd_t *C_last_col       = mzd_init_window(C, 0, nnn, m, n);
+  _mzd_mul_m4rm(C_last_col, A, B_last_col, 0, TRUE);
+  mzd_free_window((mzd_t *)B_last_col);
+  mzd_free_window(C_last_col);
+}
+mmm *= 2;
+if (m > mmm) {
+  /*         |  |   |B |   |  |
+   * Compute |AA| x |B | = |C | */
+  mzd_t const *A_last_row  = mzd_init_window_const(A, mmm, 0, m, k);
+  mzd_t const *B_first_col = mzd_init_window_const(B, 0, 0, k, nnn);
+  mzd_t *C_last_row        = mzd_init_window(C, mmm, 0, m, nnn);
+  _mzd_mul_m4rm(C_last_row, A_last_row, B_first_col, 0, TRUE);
+  mzd_free_window((mzd_t *)A_last_row);
+  mzd_free_window((mzd_t *)B_first_col);
+  mzd_free_window(C_last_row);
+}
+kkk *= 2;
+if (k > kkk) {
+  /* Add to  |  |   | B|   |C |
+   * result  |A | x |  | = |  | */
+  mzd_t const *A_last_col = mzd_init_window_const(A, 0, kkk, mmm, k);
+  mzd_t const *B_last_row = mzd_init_window_const(B, kkk, 0, k, nnn);
+  mzd_t *C_bulk           = mzd_init_window(C, 0, 0, mmm, nnn);
+  mzd_addmul_m4rm(C_bulk, A_last_col, B_last_row, 0);
+  mzd_free_window((mzd_t *)A_last_col);
+  mzd_free_window((mzd_t *)B_last_row);
+  mzd_free_window(C_bulk);
+}
+
+__M4RI_DD_MZD(C);
+return C;
 }
 
 mzd_t *_mzd_sqr_even(mzd_t *C, mzd_t const *A, int cutoff) {
@@ -342,6 +403,7 @@ mzd_t *_mzd_sqr_even(mzd_t *C, mzd_t const *A, int cutoff) {
   return C;
 }
 
+// Not this one
 mzd_t *mzd_mul(mzd_t *C, mzd_t const *A, mzd_t const *B, int cutoff) {
   if (A->ncols != B->nrows)
     m4ri_die("mzd_mul: A ncols (%d) need to match B nrows (%d).\n", A->ncols, B->nrows);
@@ -359,7 +421,6 @@ mzd_t *mzd_mul(mzd_t *C, mzd_t const *A, mzd_t const *B, int cutoff) {
     m4ri_die("mzd_mul: C (%d x %d) has wrong dimensions, expected (%d x %d)\n", C->nrows, C->ncols,
              A->nrows, B->ncols);
   }
-
   C = (A == B) ? _mzd_sqr_even(C, A, cutoff) : _mzd_mul_even(C, A, B, cutoff);
   return C;
 }
