@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: M4RI
+Description: Dense linear algebra over GF(2).
+Version: 20200125
+Requires: libpng
+Libs: -L${libdir} -lm4ri  -lm -lpng16 -lz
+Cflags: -I${includedir} @SIMD_CFLAGS@ -fopenmp -I/usr/include/libpng16
