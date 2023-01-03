@@ -28,7 +28,6 @@
 
 #include "graycode.h"
 #include "misc.h"
-#include "mmc.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,7 +83,6 @@ void __attribute__((destructor)) m4ri_fini()
 void m4ri_fini()
 #endif
 {
-  m4ri_mmc_cleanup();
   m4ri_destroy_all_codes();
 }
 

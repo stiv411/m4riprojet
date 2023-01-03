@@ -42,10 +42,6 @@
 #include <math.h>
 #include <stdio.h>
 
-#if __M4RI_HAVE_SSE2
-#include <emmintrin.h>
-#endif
-
 #include <m4ri/debug_dump.h>
 
 /**
@@ -546,27 +542,6 @@ static inline void mzd_row_add_offset(mzd_t *M, rci_t dstrow, rci_t srcrow, rci_
   *dst++ ^= *src++ & mask_begin;
   --wide;
 
-#if __M4RI_HAVE_SSE2
-  int not_aligned = __M4RI_ALIGNMENT(src, 16) != 0; /* 0: Aligned, 1: Not aligned */
-  if (wide > not_aligned + 1)                       /* Speed up for small matrices */
-  {
-    if (not_aligned) {
-      *dst++ ^= *src++;
-      --wide;
-    }
-    /* Now wide > 1 */
-    __m128i *__src     = (__m128i *)src;
-    __m128i *__dst     = (__m128i *)dst;
-    __m128i *const eof = (__m128i *)((unsigned long)(src + wide) & ~0xFUL);
-    do {
-      __m128i xmm1 = _mm_xor_si128(*__dst, *__src);
-      *__dst++     = xmm1;
-    } while (++__src < eof);
-    src  = (word *)__src;
-    dst  = (word *)__dst;
-    wide = ((sizeof(word) * wide) % 16) / sizeof(word);
-  }
-#endif
   wi_t i = -1;
   while (++i < wide) { dst[i] ^= src[i]; }
   /*
@@ -593,22 +568,6 @@ static inline void mzd_row_add_offset(mzd_t *M, rci_t dstrow, rci_t srcrow, rci_
  */
 
 void mzd_row_add(mzd_t *M, rci_t const sourcerow, rci_t const destrow);
-
-/**
- * \brief Transpose a matrix.
- *
- * This function uses the fact that:
-\verbatim
-   [ A B ]T    [AT CT]
-   [ C D ]  =  [BT DT]
- \endverbatim
- * and thus rearranges the blocks recursively.
- *
- * \param DST Preallocated return matrix, may be NULL for automatic creation.
- * \param A Matrix
- */
-
-mzd_t *mzd_transpose(mzd_t *DST, mzd_t const *A);
 
 /**
  * \brief Naive cubic matrix multiplication.
@@ -925,32 +884,6 @@ static inline void mzd_combine_even_in_place(mzd_t *A, rci_t const a_row, wi_t c
   word *a = mzd_row(A, a_row) + a_startblock;
   word const *b = mzd_row_const(B, b_row) + b_startblock;
 
-#if __M4RI_HAVE_SSE2
-  if (wide > 2) {
-    /** check alignments **/
-    if (__M4RI_ALIGNMENT(a, 16)) {
-      *a++ ^= *b++;
-      wide--;
-    }
-
-    if (__M4RI_ALIGNMENT(a, 16) == 0 && __M4RI_ALIGNMENT(b, 16) == 0) {
-      __m128i *a128      = (__m128i *)a;
-      __m128i *b128      = (__m128i *)b;
-      const __m128i *eof = (__m128i *)((unsigned long)(a + wide) & ~0xFUL);
-
-      do {
-        *a128 = _mm_xor_si128(*a128, *b128);
-        ++b128;
-        ++a128;
-      } while (a128 < eof);
-
-      a    = (word *)a128;
-      b    = (word *)b128;
-      wide = ((sizeof(word) * wide) % 16) / sizeof(word);
-    }
-  }
-#endif  // __M4RI_HAVE_SSE2
-
   if (wide > 0) {
     wi_t n = (wide + 7) / 8;
     switch (wide % 8) {
@@ -998,35 +931,6 @@ static inline void mzd_combine_even(mzd_t *C, rci_t const c_row, wi_t const c_st
   word const *a = mzd_row_const(A, a_row) + a_startblock;
   word const *b = mzd_row_const(B, b_row) + b_startblock;
   word *c   = mzd_row(C, c_row) + c_startblock;
-
-#if __M4RI_HAVE_SSE2
-  if (wide > 2) {
-    /** check alignments **/
-    if (__M4RI_ALIGNMENT(a, 16)) {
-      *c++ = *b++ ^ *a++;
-      wide--;
-    }
-
-    if ((__M4RI_ALIGNMENT(b, 16) | __M4RI_ALIGNMENT(c, 16)) == 0) {
-      __m128i *a128      = (__m128i *)a;
-      __m128i *b128      = (__m128i *)b;
-      __m128i *c128      = (__m128i *)c;
-      const __m128i *eof = (__m128i *)((unsigned long)(a + wide) & ~0xFUL);
-
-      do {
-        *c128 = _mm_xor_si128(*a128, *b128);
-        ++c128;
-        ++b128;
-        ++a128;
-      } while (a128 < eof);
-
-      a    = (word *)a128;
-      b    = (word *)b128;
-      c    = (word *)c128;
-      wide = ((sizeof(word) * wide) % 16) / sizeof(word);
-    }
-  }
-#endif  // __M4RI_HAVE_SSE2
 
   if (wide > 0) {
     wi_t n = (wide + 7) / 8;

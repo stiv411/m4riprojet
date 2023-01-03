@@ -43,13 +43,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#if defined(__M4RI_HAVE_SSE2) && __M4RI_HAVE_SSE2
-#if !defined(__SSE2__) || !__SSE2__
-#error                                                                                             \
-    "Your current compiler and / or CFLAGS setting doesn't allow SSE2 code. Please change that or these to the setting(s) you used when compiling M4RI."
-#endif
-#endif
-
 #if defined(__cplusplus) && !defined(_MSC_VER)
 extern "C" {
 #endif
@@ -59,7 +52,6 @@ extern "C" {
 #include <m4ri/echelonform.h>
 #include <m4ri/graycode.h>
 #include <m4ri/io.h>
-#include <m4ri/mp.h>
 #include <m4ri/mzd.h>
 #include <m4ri/mzp.h>
 #include <m4ri/parity.h>
@@ -67,6 +59,7 @@ extern "C" {
 #include <m4ri/ple_russian.h>
 #include <m4ri/solve.h>
 #include <m4ri/strassen.h>
+#include <m4ri/transpose.h>
 #include <m4ri/triangular.h>
 #include <m4ri/triangular_russian.h>
 

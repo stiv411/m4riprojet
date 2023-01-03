@@ -30,10 +30,6 @@
 
 #include <m4ri/m4ri_config.h>
 
-#if __M4RI_HAVE_SSE2
-#include <emmintrin.h>
-#endif
-
 #include <m4ri/misc.h>
 
 /**
@@ -43,40 +39,6 @@
 
 static inline void _mzd_combine(word *c, word const *t1, wi_t wide_in) {
   wi_t wide = wide_in;
-#if __M4RI_HAVE_SSE2
-  /* assuming c, t1 are alligned the same way */
-
-  if (__M4RI_ALIGNMENT(c, 16) == 8 && wide) {
-    *c++ ^= *t1++;
-    wide--;
-  }
-
-  __m128i *__c       = (__m128i *)c;
-  __m128i *__t1      = (__m128i *)t1;
-  const __m128i *eof = (__m128i *)((unsigned long)(c + wide) & ~0xFUL);
-  __m128i xmm1;
-
-  while (__c < eof - 1) {
-    xmm1   = _mm_xor_si128(*__c, *__t1++);
-    *__c++ = xmm1;
-    xmm1   = _mm_xor_si128(*__c, *__t1++);
-    *__c++ = xmm1;
-  }
-
-  if (__c < eof) {
-    xmm1   = _mm_xor_si128(*__c, *__t1++);
-    *__c++ = xmm1;
-  }
-
-  c    = (word *)__c;
-  t1   = (word *)__t1;
-  wide = ((sizeof(word) * wide) % 16) / sizeof(word);
-
-  if (!wide) {
-    __M4RI_DD_RAWROW(c, wide_in);
-    return;
-  }
-#endif  // __M4RI_HAVE_SSE2
 
   wi_t n = (wide + 7) / 8;
   switch (wide % 8) {

@@ -361,10 +361,6 @@ void mzd_process_rows2(mzd_t *M, rci_t startrow, rci_t stoprow, rci_t startcol, 
   word const ka_bm = __M4RI_LEFT_BITMASK(ka);
   word const kb_bm = __M4RI_LEFT_BITMASK(kb);
 
-#if __M4RI_HAVE_OPENMP
-#pragma omp parallel for private(r) shared(startrow, stoprow)                                      \
-    schedule(static, 512)  // MAX((__M4RI_CPU_L1_CACHE >> 3) / wide,
-#endif
   for (r = startrow; r < stoprow; ++r) {
     word bits      = mzd_read_bits(M, r, startcol, k);
     rci_t const x0 = L0[bits & ka_bm];
@@ -402,10 +398,6 @@ void mzd_process_rows3(mzd_t *M, rci_t startrow, rci_t stoprow, rci_t startcol, 
   word const kb_bm = __M4RI_LEFT_BITMASK(kb);
   word const kc_bm = __M4RI_LEFT_BITMASK(kc);
 
-#if __M4RI_HAVE_OPENMP
-#pragma omp parallel for private(r) shared(startrow, stoprow)                                      \
-    schedule(static, 512)  // if(stoprow-startrow > 128)
-#endif
   for (r = startrow; r < stoprow; ++r) {
     word bits      = mzd_read_bits(M, r, startcol, k);
     rci_t const x0 = L0[bits & ka_bm];
@@ -449,10 +441,6 @@ void mzd_process_rows4(mzd_t *M, rci_t startrow, rci_t stoprow, rci_t startcol, 
   word const kc_bm = __M4RI_LEFT_BITMASK(kc);
   word const kd_bm = __M4RI_LEFT_BITMASK(kd);
 
-#if __M4RI_HAVE_OPENMP
-#pragma omp parallel for private(r) shared(startrow, stoprow)                                      \
-    schedule(static, 512)  // if(stoprow-startrow > 128)
-#endif
   for (r = startrow; r < stoprow; ++r) {
     word bits      = mzd_read_bits(M, r, startcol, k);
     rci_t const x0 = L0[bits & ka_bm];
@@ -501,10 +489,6 @@ void mzd_process_rows5(mzd_t *M, rci_t startrow, rci_t stoprow, rci_t startcol, 
   word const kd_bm = __M4RI_LEFT_BITMASK(kd);
   word const ke_bm = __M4RI_LEFT_BITMASK(ke);
 
-#if __M4RI_HAVE_OPENMP
-#pragma omp parallel for private(r) shared(startrow, stoprow)                                      \
-    schedule(static, 512)  // if(stoprow-startrow > 128)
-#endif
   for (r = startrow; r < stoprow; ++r) {
     word bits      = mzd_read_bits(M, r, startcol, k);
     rci_t const x0 = L0[bits & ka_bm];
@@ -561,10 +545,6 @@ void mzd_process_rows6(mzd_t *M, rci_t startrow, rci_t stoprow, rci_t startcol, 
   word const ke_bm = __M4RI_LEFT_BITMASK(ke);
   word const kf_bm = __M4RI_LEFT_BITMASK(kf);
 
-#if __M4RI_HAVE_OPENMP
-#pragma omp parallel for private(r) shared(startrow, stoprow)                                      \
-    schedule(static, 512)  // if(stoprow-startrow > 128)
-#endif
   for (r = startrow; r < stoprow; ++r) {
     word bits      = mzd_read_bits(M, r, startcol, k);
     rci_t const x0 = L0[bits & ka_bm];
@@ -649,12 +629,7 @@ rci_t _mzd_echelonize_m4ri(mzd_t *A, int const full, int k, int heuristic, doubl
   mzd_t *U = mzd_init(kk, ncols);
   mzd_t *T = mzd_init(6 * __M4RI_TWOPOW(k), ncols + m4ri_radix);
 
-#if __M4RI_HAVE_SSE2
-  assert((__M4RI_ALIGNMENT(mzd_row(A, 0), 16) == 8) | (__M4RI_ALIGNMENT(mzd_row(A, 0), 16) == 0));
-  const rci_t align_offset = __M4RI_ALIGNMENT(mzd_row(A, 0), 16) * 8;
-#else
   const rci_t align_offset = 0;
-#endif
 
   mzd_t *T0 = mzd_init_window(T, 0 * __M4RI_TWOPOW(k), align_offset, 1 * __M4RI_TWOPOW(k),
                               ncols + align_offset);
@@ -1051,10 +1026,6 @@ mzd_t *_mzd_mul_m4rm(mzd_t *C, mzd_t const *A, mzd_t const *B, int k, int clear)
   rci_t *L[__M4RI_M4RM_NTABLES];
   word const *t[__M4RI_M4RM_NTABLES];
   mzd_t *T[__M4RI_M4RM_NTABLES];
-#ifdef __M4RI_HAVE_SSE2
-  mzd_t *Talign[__M4RI_M4RM_NTABLES];
-  int c_align = (__M4RI_ALIGNMENT(mzd_row(C, 0), 16) == 8);
-#endif
 
   rci_t const a_nr = A->nrows;
   rci_t const a_nc = A->ncols;
@@ -1093,14 +1064,7 @@ mzd_t *_mzd_mul_m4rm(mzd_t *C, mzd_t const *A, mzd_t const *B, int k, int clear)
   rci_t *buffer = (rci_t *)m4ri_mm_malloc(__M4RI_M4RM_NTABLES * __M4RI_TWOPOW(k) * sizeof(rci_t));
   for (int z = 0; z < __M4RI_M4RM_NTABLES; z++) {
     L[z] = buffer + z * __M4RI_TWOPOW(k);
-#ifdef __M4RI_HAVE_SSE2
-    /* we make sure that T are aligned as C */
-    Talign[z] = mzd_init(__M4RI_TWOPOW(k), b_nc + m4ri_radix);
-    T[z]      = mzd_init_window(Talign[z], 0, c_align * m4ri_radix, Talign[z]->nrows,
-                           b_nc + c_align * m4ri_radix);
-#else
     T[z] = mzd_init(__M4RI_TWOPOW(k), b_nc);
-#endif
   }
 
   /* process stuff that fits into multiple of k first, but blockwise (babystep-giantstep)*/
@@ -1110,17 +1074,11 @@ mzd_t *_mzd_mul_m4rm(mzd_t *C, mzd_t const *A, mzd_t const *B, int k, int clear)
 
   for (rci_t giantstep = 0; giantstep < a_nr; giantstep += blocksize) {
     for (rci_t i = 0; i < end; ++i) {
-#if __M4RI_HAVE_OPENMP
-#pragma omp parallel for schedule(static, 1)
-#endif
       for (int z = 0; z < __M4RI_M4RM_NTABLES; z++) {
         mzd_make_table(B, kk * i + k * z, 0, k, T[z], L[z]);
       }
 
       const rci_t blockend = MIN(giantstep + blocksize, a_nr);
-#if __M4RI_HAVE_OPENMP
-#pragma omp parallel for schedule(static, 512) private(x, t)
-#endif
       for (rci_t j = giantstep; j < blockend; j++) {
         const word a = mzd_read_bits(A, j, kk * i, kk);
 
@@ -1179,9 +1137,6 @@ mzd_t *_mzd_mul_m4rm(mzd_t *C, mzd_t const *A, mzd_t const *B, int k, int clear)
 
   for (int j = 0; j < __M4RI_M4RM_NTABLES; j++) {
     mzd_free(T[j]);
-#ifdef __M4RI_HAVE_SSE2
-    mzd_free(Talign[j]);
-#endif
   }
   m4ri_mm_free(buffer);
 

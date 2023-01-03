@@ -48,15 +48,6 @@ int mul_test_equality(rci_t m, rci_t l, rci_t n, int k, int cutoff) {
     ret -= 1;
   }
 
-#if __M4RI_HAVE_OPENMP
-  mzd_t *F = mzd_mul_mp(NULL, A, B, cutoff);
-  if (mzd_equal(C, F) != TRUE) {
-    printf(" MP != Naiv");
-    ret -= 1;
-  }
-  mzd_free(F);
-#endif
-
   mzd_free(A);
   mzd_free(B);
   mzd_free(C);
@@ -167,16 +158,6 @@ int addmul_test_equality(rci_t m, rci_t l, rci_t n, int k, int cutoff) {
     printf(" M4RM != addmul");
     ret -= 1;
   }
-
-#if __M4RI_HAVE_OPENMP
-  mzd_t *G = mzd_copy(NULL, C);
-  G        = mzd_addmul_mp(G, A, B, cutoff);
-  if (mzd_equal(D, G) != TRUE) {
-    printf(" MP != Naiv");
-    ret -= 1;
-  }
-  mzd_free(G);
-#endif
 
   if (ret == 0)
     printf(" ... passed\n");

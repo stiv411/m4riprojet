@@ -12,9 +12,9 @@ M4RI is a library for fast arithmetic with dense matrices over F2. The name M4RI
 
 * asymptotically fast Triangular System solving with Matrices (upper left, lower left, upper right, lower right),
 
-* support for the x86/x86_64 SSE2 instruction set where available;
+* *[[PPAR:REMOVED]]* support for the x86/x86_64 SSE2 instruction set where available;
 
-* preliminary support for parallelisation on shared memory systems via OpenMP;
+* *[[PPAR:REMOVED]]* preliminary support for parallelisation on shared memory systems via OpenMP;
 
 * and support for Linux, Solaris, and OS X (GCC).
 
@@ -26,6 +26,8 @@ See [Performance](https://bitbucket.org/malb/m4ri/wiki/Performance).
 
 # OpenMP Support #
 
+*[[PPAR: switch has been left in place, but functionality itself has been removed]]*
+
 OpenMP support for parallel multiplication and elimination is enabled with the
 
     --enable-openmp
@@ -34,11 +36,7 @@ configure switch.
 
 # Install #
 
-If you downloaded M4RI by cloning the mainline tree at
-
-https://bitbucket.org/malb/m4ri
-
-you need to first run the following command:
+If you downloaded M4RI by cloning the source repository, then you need to first run the following command:
 
     autoreconf --install
 

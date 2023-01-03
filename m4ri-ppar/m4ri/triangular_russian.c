@@ -71,20 +71,8 @@ void _mzd_trsm_upper_left_russian(mzd_t const *U, mzd_t *B, int k) {
   mzd_t *T[__M4RI_TRSM_NTABLES];
   rci_t *L[__M4RI_TRSM_NTABLES];
 
-#ifdef __M4RI_HAVE_SSE2
-  mzd_t *Talign[__M4RI_TRSM_NTABLES];
-  int b_align = (__M4RI_ALIGNMENT(mzd_row(B, 0), 16) == 8);
-#endif
-
   for (int i = 0; i < __M4RI_TRSM_NTABLES; i++) {
-#ifdef __M4RI_HAVE_SSE2
-    /* we make sure that T are aligned as C */
-    Talign[i] = mzd_init(__M4RI_TWOPOW(k), B->ncols + m4ri_radix);
-    T[i]      = mzd_init_window(Talign[i], 0, b_align * m4ri_radix, Talign[i]->nrows,
-                           B->ncols + b_align * m4ri_radix);
-#else
     T[i] = mzd_init(__M4RI_TWOPOW(k), B->ncols);
-#endif
     L[i] = (rci_t *)m4ri_mm_calloc(__M4RI_TWOPOW(k), sizeof(rci_t));
   }
 
@@ -158,9 +146,6 @@ void _mzd_trsm_upper_left_russian(mzd_t const *U, mzd_t *B, int k) {
   }
   for (int i = 0; i < __M4RI_TRSM_NTABLES; i++) {
     mzd_free(T[i]);
-#ifdef __M4RI_HAVE_SSE2
-    mzd_free(Talign[i]);
-#endif
     m4ri_mm_free(L[i]);
   }
 
@@ -224,20 +209,8 @@ void _mzd_trsm_lower_left_russian(mzd_t const *L, mzd_t *B, int k) {
   mzd_t *T[__M4RI_TRSM_NTABLES];
   rci_t *J[__M4RI_TRSM_NTABLES];
 
-#ifdef __M4RI_HAVE_SSE2
-  /* we make sure that T are aligned as B, this is dirty, we need a function for this */
-  mzd_t *Talign[__M4RI_TRSM_NTABLES];
-  int b_align = (__M4RI_ALIGNMENT(mzd_row(B, 0), 16) == 8);
-#endif
-
   for (int i = 0; i < __M4RI_TRSM_NTABLES; i++) {
-#ifdef __M4RI_HAVE_SSE2
-    Talign[i] = mzd_init(__M4RI_TWOPOW(k), B->ncols + m4ri_radix);
-    T[i]      = mzd_init_window(Talign[i], 0, b_align * m4ri_radix, Talign[i]->nrows,
-                           B->ncols + b_align * m4ri_radix);
-#else
     T[i] = mzd_init(__M4RI_TWOPOW(k), B->ncols);
-#endif
     J[i] = (rci_t *)m4ri_mm_calloc(__M4RI_TWOPOW(k), sizeof(rci_t));
   }
 
@@ -310,9 +283,6 @@ void _mzd_trsm_lower_left_russian(mzd_t const *L, mzd_t *B, int k) {
   }
   for (int i = 0; i < __M4RI_TRSM_NTABLES; i++) {
     mzd_free(T[i]);
-#ifdef __M4RI_HAVE_SSE2
-    mzd_free(Talign[i]);
-#endif
     m4ri_mm_free(J[i]);
   }
 

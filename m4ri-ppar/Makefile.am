@@ -9,6 +9,7 @@ libm4ri_la_SOURCES = \
 	m4ri/brilliantrussian.c \
 	m4ri/misc.c \
 	m4ri/mzd.c \
+	m4ri/transpose.c \
 	m4ri/graycode.c \
 	m4ri/strassen.c \
 	m4ri/mzp.c \
@@ -18,11 +19,9 @@ libm4ri_la_SOURCES = \
 	m4ri/ple_russian.c \
 	m4ri/solve.c \
 	m4ri/echelonform.c \
-	m4ri/mmc.c \
 	m4ri/debug_dump.c \
 	m4ri/io.c \
-	m4ri/djb.c \
-	m4ri/mp.c	
+	m4ri/djb.c
 
 BUILT_SOURCES = m4ri/m4ri_config.h
 
@@ -31,6 +30,7 @@ pkgincludesub_HEADERS = m4ri/m4ri.h \
 	m4ri/brilliantrussian.h \
 	m4ri/misc.h \
 	m4ri/mzd.h \
+	m4ri/transpose.h \
 	m4ri/graycode.h \
 	m4ri/strassen.h \
 	m4ri/parity.h \
@@ -44,11 +44,9 @@ pkgincludesub_HEADERS = m4ri/m4ri.h \
 	m4ri/echelonform.h \
 	m4ri/xor.h \
 	m4ri/xor_template.h \
-	m4ri/mmc.h \
 	m4ri/debug_dump.h \
 	m4ri/io.h \
-	m4ri/djb.h \
-	m4ri/mp.h
+	m4ri/djb.h
 
 nodist_pkgincludesub_HEADERS = m4ri/m4ri_config.h
 

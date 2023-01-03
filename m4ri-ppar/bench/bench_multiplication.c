@@ -95,12 +95,8 @@ int run(void *_p, unsigned long long *data, int *data_len) {
   if (p->mp == 0) {
     C = mzd_mul(NULL, A, B, p->cutoff);
   } else {
-#if __M4RI_HAVE_OPENMP
-    C = mzd_mul_mp(NULL, A, B, p->cutoff);
-#else
     printf("option mp ignored\n");
     C = mzd_mul(NULL, A, B, p->cutoff);
-#endif
   }
 #ifndef HAVE_LIBPAPI
   data[1] = cpucycles() - data[1];

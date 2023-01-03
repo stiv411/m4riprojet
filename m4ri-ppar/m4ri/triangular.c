@@ -522,9 +522,6 @@ mzd_t *mzd_trtri_upper(mzd_t *U) {
     rci_t const n = U->nrows;
     rci_t n2      = (((n - 1) / m4ri_radix + 1) >> 1);
 
-#if __M4RI_HAVE_SSE2
-    if (n2 % 2) n2 += 1;
-#endif
     n2 *= m4ri_radix;
 
     assert(n2 < n);

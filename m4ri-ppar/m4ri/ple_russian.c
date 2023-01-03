@@ -23,13 +23,8 @@
 
 #include "m4ri_config.h"
 
-#if __M4RI_HAVE_SSE2
-#include <emmintrin.h>
-#endif
-
 #include "brilliantrussian.h"
 #include "graycode.h"
-#include "mmc.h"
 #include "ple_russian.h"
 #include "xor.h"
 
