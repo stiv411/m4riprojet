@@ -1,0 +1,71 @@
+   mul: m:    1, l:    1, n:    1, k:  0, cutoff: 1024 ... passed
+   mul: m:    1, l:  128, n:  128, k:  0, cutoff:    0 ... passed
+   mul: m:    3, l:  131, n:  257, k:  0, cutoff:    0 ... passed
+   mul: m:   64, l:   64, n:   64, k:  0, cutoff:   64 ... passed
+   mul: m:  128, l:  128, n:  128, k:  0, cutoff:   64 ... passed
+   mul: m:   21, l:  171, n:   31, k:  0, cutoff:   63 ... passed
+   mul: m:   21, l:  171, n:   31, k:  0, cutoff:  131 ... passed
+   mul: m:  193, l:   65, n:   65, k:  8, cutoff:   64 ... passed
+   mul: m: 1025, l: 1025, n: 1025, k:  3, cutoff:  256 ... passed
+   mul: m: 2048, l: 2048, n: 4096, k:  0, cutoff: 1024 ... passed
+   mul: m: 4096, l: 3528, n: 4096, k:  0, cutoff: 1024 ... passed
+   mul: m: 1024, l: 1025, n:    1, k:  0, cutoff: 1024 ... passed
+   mul: m: 1000, l: 1000, n: 1000, k:  0, cutoff:  256 ... passed
+   mul: m: 1000, l:   10, n:   20, k:  0, cutoff:   64 ... passed
+   mul: m: 1710, l: 1290, n: 1000, k:  0, cutoff:  256 ... passed
+   mul: m: 1290, l: 1710, n:  200, k:  0, cutoff:   64 ... passed
+   mul: m: 1290, l: 1710, n: 2000, k:  0, cutoff:  256 ... passed
+   mul: m: 1290, l: 1290, n: 2000, k:  0, cutoff:   64 ... passed
+   mul: m: 1000, l:  210, n:  200, k:  0, cutoff:   64 ... passed
+addmul: m:    1, l:  128, n:  128, k:  0, cutoff:    0 ... passed
+addmul: m:    3, l:  131, n:  257, k:  0, cutoff:    0 ... passed
+addmul: m:   64, l:   64, n:   64, k:  0, cutoff:   64 ... passed
+addmul: m:  128, l:  128, n:  128, k:  0, cutoff:   64 ... passed
+addmul: m:   21, l:  171, n:   31, k:  0, cutoff:   63 ... passed
+addmul: m:   21, l:  171, n:   31, k:  0, cutoff:  131 ... passed
+addmul: m:  193, l:   65, n:   65, k:  8, cutoff:   64 ... passed
+addmul: m: 1025, l: 1025, n: 1025, k:  3, cutoff:  256 ... passed
+addmul: m: 4096, l: 4096, n: 4096, k:  0, cutoff: 2048 ... passed
+addmul: m: 1000, l: 1000, n: 1000, k:  0, cutoff:  256 ... passed
+addmul: m: 1000, l:   10, n:   20, k:  0, cutoff:   64 ... passed
+addmul: m: 1710, l: 1290, n: 1000, k:  0, cutoff:  256 ... passed
+addmul: m: 1290, l: 1710, n:  200, k:  0, cutoff:   64 ... passed
+addmul: m: 1290, l: 1710, n: 2000, k:  0, cutoff:  256 ... passed
+addmul: m: 1290, l: 1290, n: 2000, k:  0, cutoff:   64 ... passed
+addmul: m: 1000, l:  210, n:  200, k:  0, cutoff:   64 ... passed
+   sqr: m:    1, k:  0, cutoff: 1024 ... passed
+   sqr: m:  128, k:  0, cutoff:    0 ... passed
+   sqr: m:  131, k:  0, cutoff:    0 ... passed
+   sqr: m:   64, k:  0, cutoff:   64 ... passed
+   sqr: m:  128, k:  0, cutoff:   64 ... passed
+   sqr: m:  171, k:  0, cutoff:   63 ... passed
+   sqr: m:  171, k:  0, cutoff:  131 ... passed
+   sqr: m:  193, k:  8, cutoff:   64 ... passed
+   sqr: m: 1025, k:  3, cutoff:  256 ... passed
+   sqr: m: 2048, k:  0, cutoff: 1024 ... passed
+   sqr: m: 3528, k:  0, cutoff: 1024 ... passed
+   sqr: m: 1000, k:  0, cutoff:  256 ... passed
+   sqr: m: 1000, k:  0, cutoff:   64 ... passed
+   sqr: m: 1710, k:  0, cutoff:  256 ... passed
+   sqr: m: 1290, k:  0, cutoff:   64 ... passed
+   sqr: m: 2000, k:  0, cutoff:  256 ... passed
+   sqr: m: 2000, k:  0, cutoff:   64 ... passed
+   sqr: m:  210, k:  0, cutoff:   64 ... passed
+addsqr: m:    1, k:  0, cutoff:    0 ... passed
+addsqr: m:  131, k:  0, cutoff:    0 ... passed
+addsqr: m:   64, k:  0, cutoff:   64 ... passed
+addsqr: m:  128, k:  0, cutoff:   64 ... passed
+addsqr: m:  171, k:  0, cutoff:   63 ... passed
+addsqr: m:  171, k:  0, cutoff:  131 ... passed
+addsqr: m:  193, k:  8, cutoff:   64 ... passed
+addsqr: m: 1025, k:  3, cutoff:  256 ... passed
+addsqr: m: 4096, k:  0, cutoff: 2048 ... passed
+addsqr: m: 1000, k:  0, cutoff:  256 ... passed
+addsqr: m: 1000, k:  0, cutoff:   64 ... passed
+addsqr: m: 1710, k:  0, cutoff:  256 ... passed
+addsqr: m: 1290, k:  0, cutoff:   64 ... passed
+addsqr: m: 2000, k:  0, cutoff:  256 ... passed
+addsqr: m: 2000, k:  0, cutoff:   64 ... passed
+addsqr: m:  210, k:  0, cutoff:   64 ... passed
+All tests passed.
+PASS test_multiplication (exit status: 0)

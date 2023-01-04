@@ -1,0 +1,7 @@
+      mzd_add: M:   64, N:   64, m:   10, n:   10, pattern: 0x3030303030303  ... passed
+      mzd_add: M:  100, N:  100, m:   64, n:   64, pattern: 0x3030303030303  ... passed
+      mzd_add: M: 1024, N: 1024, m:  513, n:  511, pattern: 0x3030303030303  ... passed
+      mzd_add: M: 1024, N: 1024, m:  512, n:  798, pattern: 0x3030303030303  ... passed
+      mzd_add: M: 2048, N: 2048, m: 1024, n: 1024, pattern: 0x3030303030303  ... passed
+All tests passed.
+PASS test_smallops (exit status: 0)

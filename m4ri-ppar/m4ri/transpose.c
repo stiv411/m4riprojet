@@ -20,7 +20,7 @@
  ******************************************************************************/
 
 #include "mzd.h"
-
+#include "omp.h"
 /**
  * Transpose a 64 x 64 matrix with width 1.
  *
@@ -132,7 +132,6 @@ static inline void _mzd_copy_transpose_64x64_2(word *RESTRICT dst1, word *RESTRI
   wks[1] = src2;
 
   do {
-
     for (int k = 0; k < j; ++k) {
       xor[0]                     = ((*wks[0] >> j) ^ *(wks[0] + j_rowstride_src)) & m;
       xor[1]                     = ((*wks[1] >> j) ^ *(wks[1] + j_rowstride_src)) & m;
@@ -875,8 +874,18 @@ static void _mzd_transpose_notsmall(word *RESTRICT fwd, word const *RESTRICT fws
         word *RESTRICT fwd_right = fwd + offset; 
         rci_t maxsize_up = MAX(large_size, ncols);
         rci_t maxsize_down = MAX(nrows - large_size, ncols);
-        _mzd_transpose_notsmall(fwd_left, fws_up, rowstride_dst, rowstride_src, large_size, ncols, maxsize_up);
-        _mzd_transpose_notsmall(fwd_right, fws_down, rowstride_dst, rowstride_src, nrows - large_size, ncols, maxsize_down);
+        #pragma omp parallel
+        #pragma omp single
+        {
+        #pragma omp task
+        {
+          _mzd_transpose_notsmall(fwd_left, fws_up, rowstride_dst, rowstride_src, large_size, ncols, maxsize_up);
+        }
+        #pragma omp task
+        {
+          _mzd_transpose_notsmall(fwd_right, fws_down, rowstride_dst, rowstride_src, nrows - large_size, ncols, maxsize_down);
+        }
+        }
       } else {
         word const *RESTRICT fws_left = fws; 
         word const *RESTRICT fws_right = fws + offset;
@@ -884,8 +893,18 @@ static void _mzd_transpose_notsmall(word *RESTRICT fwd, word const *RESTRICT fws
         word *RESTRICT fwd_down = fwd + large_size * rowstride_dst; 
         rci_t maxsize_left = MAX(nrows, large_size);
         rci_t maxsize_right = MAX(nrows, ncols - large_size);
-        _mzd_transpose_notsmall(fwd_up, fws_left, rowstride_dst, rowstride_src, nrows, large_size, maxsize_left);
-        _mzd_transpose_notsmall(fwd_down, fws_right, rowstride_dst, rowstride_src, nrows, ncols - large_size, maxsize_right);
+        #pragma omp parallel
+        #pragma omp single
+        {
+        #pragma omp task
+        {
+          _mzd_transpose_notsmall(fwd_up, fws_left, rowstride_dst, rowstride_src, nrows, large_size, maxsize_left);
+          }
+        #pragma omp task
+        {
+          _mzd_transpose_notsmall(fwd_down, fws_right, rowstride_dst, rowstride_src, nrows, ncols - large_size, maxsize_right);
+        }
+      }
     }
   }
 }

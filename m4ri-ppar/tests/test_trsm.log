@@ -1,0 +1,82 @@
+upper_right:: m:   63 n:   63 offset:    0 ... passed
+upper_right:: m:   64 n:   64 offset:    0 ... passed
+upper_right:: m:   65 n:   65 offset:    0 ... passed
+upper_right:: m:   53 n:   53 offset:    0 ... passed
+upper_right:: m:   54 n:   54 offset:    0 ... passed
+upper_right:: m:   55 n:   55 offset:    0 ... passed
+upper_right:: m:   57 n:   10 offset:    0 ... passed
+upper_right:: m:   57 n:  150 offset:    0 ... passed
+upper_right:: m:   57 n:    3 offset:    0 ... passed
+upper_right:: m:   57 n:    4 offset:   64 ... passed
+upper_right:: m:   57 n:   80 offset:   64 ... passed
+upper_right:: m: 1577 n: 1802 offset:  128 ... passed
+upper_right:: m: 2065 n: 2065 offset:    0 ... passed
+
+lower_right:: m:   63 n:   63 offset:    0 ... passed
+lower_right:: m:   64 n:   64 offset:    0 ... passed
+lower_right:: m:   65 n:   65 offset:    0 ... passed
+lower_right:: m:   53 n:   53 offset:    0 ... passed
+lower_right:: m:   54 n:   54 offset:    0 ... passed
+lower_right:: m:   55 n:   55 offset:    0 ... passed
+lower_right:: m:   57 n:   10 offset:    0 ... passed
+lower_right:: m:   57 n:  150 offset:    0 ... passed
+lower_right:: m:   57 n:    3 offset:    0 ... passed
+lower_right:: m:   57 n:    4 offset:   64 ... passed
+lower_right:: m:   57 n:   80 offset:   64 ... passed
+lower_right:: m: 1577 n: 1802 offset:  128 ... passed
+lower_right:: m: 2065 n: 2065 offset:    0 ... passed
+
+lower_left:: m:   63 n:   63 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   64 n:   64 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   65 n:   65 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   53 n:   53 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   54 n:   54 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   55 n:   55 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   10 n:   20 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   10 n:   80 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   10 n:   20 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   10 n:   80 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   10 n:   20 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   10 n:   80 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   10 n:   20 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   10 n:   80 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   70 n:   20 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   70 n:   80 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   70 n:   10 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   70 n:   80 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   70 n:   20 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   70 n:   80 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   70 n:   20 offset L:    0 offset B:    0 ...  ... passed
+lower_left:: m:   70 n:   80 offset L:   64 offset B:   64 ...  ... passed
+lower_left:: m:  770 n: 1600 offset L:   64 offset B:  128 ...  ... passed
+lower_left:: m: 1764 n: 1345 offset L:  256 offset B:   64 ...  ... passed
+lower_left:: m: 2065 n: 2065 offset L:    0 offset B:    0 ...  ... passed
+
+upper_left:: m:   63 n:   63 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   64 n:   64 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   65 n:   65 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   53 n:   53 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   54 n:   54 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   55 n:   55 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   10 n:   20 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   10 n:   80 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   10 n:   20 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   10 n:   80 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   10 n:   20 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   10 n:   80 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   10 n:   20 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   10 n:   80 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   70 n:   20 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   63 n:    1 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   70 n:   80 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   70 n:   10 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   70 n:   80 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   70 n:   20 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   70 n:   80 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   70 n:   20 offset U:    0 offset B:    0 ... passed
+upper_left:: m:   70 n:   80 offset U:   64 offset B:   64 ... passed
+upper_left:: m:  770 n: 1600 offset U:   64 offset B:  128 ... passed
+upper_left:: m: 1764 n: 1345 offset U:  256 offset B:   64 ... passed
+upper_left:: m: 2065 n: 2065 offset U:    0 offset B:    0 ... passed
+All tests passed.
+PASS test_trsm (exit status: 0)

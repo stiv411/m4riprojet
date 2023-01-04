@@ -1,0 +1,25 @@
+png: m:    1, n:    1 ... passed
+png: m:   16, n:   15 ... passed
+png: m:   32, n:   32 ... passed
+png: m:   63, n:   63 ... passed
+png: m:   64, n:   64 ... passed
+png: m:  113, n:  114 ... passed
+png: m:  125, n:  102 ... passed
+png: m:  126, n:   12 ... passed
+png: m:  128, n:  200 ... passed
+submatrix: m:    2, n:  127, (   1,    1,    2,  127) ... passed
+submatrix: m:    2, n:  128, (   1,    1,    2,  128) ... passed
+submatrix: m:    2, n:  129, (   1,    1,    2,  129) ... passed
+submatrix: m:    2, n:  130, (   1,    1,    2,  130) ... passed
+submatrix: m:    2, n:  131, (   1,    1,    2,  131) ... passed
+submatrix: m:    2, n:   63, (   1,    1,    2,   63) ... passed
+submatrix: m:    2, n:   64, (   1,    1,    2,   64) ... passed
+submatrix: m:    2, n:   65, (   1,    1,    2,   65) ... passed
+submatrix: m:    2, n:   66, (   1,    1,    2,   66) ... passed
+submatrix: m:    2, n:   67, (   1,    1,    2,   67) ... passed
+submatrix: m:    2, n:  127, (   1,   63,    2,  127) ... passed
+submatrix: m:    2, n:  128, (   1,   64,    2,  128) ... passed
+submatrix: m:    2, n:  129, (   1,   65,    2,  129) ... passed
+submatrix: m:    2, n:  130, (   1,   66,    2,  130) ... passed
+All tests passed.
+PASS test_misc (exit status: 0)

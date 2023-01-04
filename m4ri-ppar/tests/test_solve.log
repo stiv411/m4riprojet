@@ -1,0 +1,65 @@
+passed
+passed
+passed
+passed
+passed
+skipped (OK, no solution found)
+skipped (OK, no solution found)
+passed
+skipped (OK, no solution found)
+skipped (OK, no solution found)
+solve_left m:  262, n:  379, r:  261 da:    0 db:    0 skipped (no solution)
+solve_left m:  405, n:  949, r:  405 da:    0 db:    0 passed
+solve_left m:  433, n:  554, r:  433 da:    0 db:    0 passed
+solve_left m:  187, n:  346, r:  186 da:    0 db:    0 skipped (no solution)
+solve_left m:  173, n:  514, r:  173 da:    0 db:    0 passed
+solve_left m:  176, n:   61, r:  174 da:    0 db:    0 skipped (no solution)
+solve_left m:  178, n:  195, r:  178 da:    0 db:    0 passed
+solve_left m:   57, n:  741, r:   57 da:    0 db:    0 passed
+solve_left m:  477, n:  657, r:  476 da:    0 db:    0 skipped (no solution)
+solve_left m:  313, n:   87, r:  313 da:    0 db:    0 passed
+solve_left m:  419, n:  193, r:  418 da:    0 db:    0 skipped (no solution)
+solve_left m:  380, n:  337, r:  379 da:    0 db:    0 skipped (no solution)
+solve_left m:  411, n:  334, r:  410 da:    0 db:    0 skipped (no solution)
+solve_left m:   99, n:   57, r:   98 da:    0 db:    0 skipped (no solution)
+solve_left m:  418, n:  898, r:  417 da:    0 db:    0 skipped (no solution)
+solve_left m:  276, n:  784, r:  276 da:    0 db:    0 passed
+solve_left m:  412, n:  386, r:  411 da:    0 db:    0 skipped (no solution)
+solve_left m:   27, n:  776, r:   26 da:    0 db:    0 skipped (no solution)
+solve_left m:   64, n:  542, r:   63 da:    0 db:    0 skipped (no solution)
+solve_left m:  396, n:  396, r:  395 da:    0 db:    0 skipped (no solution)
+solve_left m:  208, n:  217, r:  207 da:    0 db:    0 skipped (no solution)
+solve_left m:  383, n:  935, r:  382 da:    0 db:    0 skipped (no solution)
+solve_left m:  488, n:  844, r:  487 da:    0 db:    0 skipped (no solution)
+solve_left m:  509, n:  494, r:  507 da:    0 db:    0 skipped (no solution)
+solve_left m:  177, n:   32, r:  176 da:    0 db:    0 skipped (no solution)
+solve_left m:  440, n:  117, r:  438 da:    0 db:    0 skipped (no solution)
+solve_left m:  506, n:  796, r:  505 da:    0 db:    0 skipped (no solution)
+solve_left m:   45, n:  186, r:   44 da:    0 db:    0 skipped (no solution)
+solve_left m:  357, n:  294, r:  357 da:    0 db:    0 passed
+solve_left m:  442, n:  275, r:  441 da:    0 db:    0 skipped (no solution)
+solve_left m:   11, n:  560, r:   11 da:    0 db:    0 passed
+solve_left m:  399, n:  682, r:  399 da:    0 db:    0 passed
+solve_left m:  340, n:  546, r:  340 da:    0 db:    0 passed
+solve_left m:   45, n:   66, r:   45 da:    0 db:    0 passed
+solve_left m:  360, n:  499, r:  360 da:    0 db:    0 passed
+solve_left m:  442, n:  415, r:  442 da:    0 db:    0 passed
+solve_left m:   29, n:  671, r:   27 da:    0 db:    0 skipped (no solution)
+solve_left m:  230, n:  128, r:  229 da:    0 db:    0 skipped (no solution)
+solve_left m:  104, n:  851, r:  103 da:    0 db:    0 skipped (no solution)
+solve_left m:  170, n:  152, r:  168 da:    0 db:    0 skipped (no solution)
+solve_left m:   91, n:  132, r:   90 da:    0 db:    0 skipped (no solution)
+solve_left m:  478, n:  323, r:  477 da:    0 db:    0 skipped (no solution)
+solve_left m:  264, n:  686, r:  263 da:    0 db:    0 skipped (no solution)
+solve_left m:  111, n:  404, r:  110 da:    0 db:    0 skipped (no solution)
+solve_left m:  312, n:  989, r:  312 da:    0 db:    0 passed
+solve_left m:  373, n:  701, r:  372 da:    0 db:    0 skipped (no solution)
+solve_left m:  271, n:  142, r:  269 da:    0 db:    0 skipped (no solution)
+solve_left m:  370, n:  257, r:  368 da:    0 db:    0 skipped (no solution)
+solve_left m:  131, n:  352, r:  131 da:    0 db:    0 passed
+solve_left m:  349, n:  426, r:  348 da:    0 db:    0 skipped (no solution)
+solve_left m:  361, n:  905, r:  360 da:    0 db:    0 skipped (no solution)
+solve_left m:  209, n:  476, r:  208 da:    0 db:    0 skipped (no solution)
+solve_left m:  163, n:  367, r:  163 da:    0 db:    0 passed
+solve_left m:  177, n:  697, r:  176 da:    0 db:    0 skipped (no solution)
+solve_left m:  438, n: FAIL test_solve (exit status: 139)

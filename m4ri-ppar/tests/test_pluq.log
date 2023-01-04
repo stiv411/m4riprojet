@@ -1,0 +1,62 @@
+pluq: testing string m:     4, n:     4, rank:     3  ... passed
+pluq: testing structured m:    37, n:    37, rank:    19  ... passed
+pluq: testing structured m:    63, n:    63, rank:    32  ... passed
+pluq: testing structured m:    64, n:    64, rank:    32  ... passed
+pluq: testing structured m:    65, n:    65, rank:    33  ... passed
+pluq: testing structured m:   128, n:   128, rank:    64  ... passed
+pluq: testing structured m:    37, n:   137, rank:    19  ... passed
+pluq: testing structured m:    65, n:     5, rank:     3  ... passed
+pluq: testing structured m:   128, n:    18, rank:     9  ... passed
+pluq: testing full rank m:    13, n:    13 ... passed
+pluq: testing full rank m:    37, n:    37 ... passed
+pluq: testing full rank m:    63, n:    63 ... passed
+pluq: testing full rank m:    64, n:    64 ... passed
+pluq: testing full rank m:    65, n:    65 ... passed
+pluq: testing full rank m:    97, n:    97 ... passed
+pluq: testing full rank m:   128, n:   128 ... passed
+pluq: testing full rank m:   150, n:   150 ... passed
+pluq: testing full rank m:   256, n:   256 ... passed
+pluq: testing full rank m:  1024, n:  1024 ... passed
+pluq: testing full rank m:    13, n:    11 ... passed
+pluq: testing full rank m:    37, n:    39 ... passed
+pluq: testing full rank m:    64, n:   164 ... passed
+pluq: testing full rank m:    97, n:    92 ... passed
+pluq: testing full rank m:   128, n:   121 ... passed
+pluq: testing full rank m:   150, n:   153 ... passed
+pluq: testing full rank m:   256, n:   258 ... passed
+pluq: testing full rank m:  1024, n:  1023 ... passed
+pluq: testing half rank m:    64, n:    64 ... passed
+pluq: testing half rank m:    65, n:    65 ... passed
+pluq: testing half rank m:    66, n:    66 ... passed
+pluq: testing half rank m:   127, n:   127 ... passed
+pluq: testing half rank m:   129, n:   129 ... passed
+pluq: testing half rank m:   148, n:   148 ... passed
+pluq: testing half rank m:   132, n:   132 ... passed
+pluq: testing half rank m:   256, n:   256 ... passed
+pluq: testing half rank m:  1024, n:  1024 ... passed
+pluq: testing half rank m:   129, n:   127 ... passed
+pluq: testing half rank m:   132, n:   136 ... passed
+pluq: testing half rank m:   256, n:   251 ... passed
+pluq: testing half rank m:  1024, n:  2100 ... passed
+pluq: testing random m:    63, n:    63, rank:    62  ... passed
+pluq: testing random m:    64, n:    64, rank:    64  ... passed
+pluq: testing random m:    65, n:    65, rank:    65  ... passed
+pluq: testing random m:   128, n:   128, rank:   126  ... passed
+pluq: testing random m:   128, n:   131, rank:   128  ... passed
+pluq: testing random m:   132, n:   731, rank:   132  ... passed
+pluq: testing random m:   150, n:   150, rank:   149  ... passed
+pluq: testing random m:   252, n:    24, rank:    24  ... passed
+pluq: testing random m:   256, n:   256, rank:   255  ... passed
+pluq: testing random m:  1024, n:  1022, rank:  1022  ... passed
+pluq: testing random m:  1024, n:  1024, rank:  1024  ... passed
+pluq: testing random m:   128, n:  1280, rank:   128  ... passed
+pluq: testing random m:   128, n:   130, rank:   128  ... passed
+pluq: testing random m:   132, n:   132, rank:   132  ... passed
+pluq: testing random m:   150, n:   151, rank:   150  ... passed
+pluq: testing random m:   252, n:     2, rank:     2  ... passed
+pluq: testing random m:   256, n:   251, rank:   251  ... passed
+pluq: testing random m:  1024, n:  1025, rank:  1024  ... passed
+pluq: testing random m:  1024, n:  1021, rank:  1020  ... passed
+pluq: testing random m:   745, n: 46743, rank:   745  ... passed
+All tests passed.
+PASS test_pluq (exit status: 0)
